@@ -9,13 +9,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfig {
 
-    @Bean
-    public UserFindCommandHandler userFindCommandHandler(final UserRepository userRepository) {
-        return new UserFindCommandHandler(userRepository);
-    }
+	@Bean
+	public UserFindCommandHandler userFindCommandHandler(final UserRepository userRepository) {
+		return new UserFindCommandHandler(userRepository);
+	}
 
-    @Bean
-    public AuthCommandHandler authCommandHandler(final UserRepository userRepository) {
-        return new AuthCommandHandler();
-    }
+	@Bean
+	public AuthCommandHandler authCommandHandler(final UserRepository userRepository) {
+		return new AuthCommandHandler();
+	}
 }

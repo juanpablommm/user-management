@@ -2,7 +2,6 @@ package com.challenge.ecommerce.tps.user_management.users.api;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +12,8 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
 
 	@Override
 	public boolean isValid(String password, ConstraintValidatorContext context) {
-		if (Objects.isNull(password)) return false;
+		if (Objects.isNull(password))
+			return false;
 		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 		Matcher matcher = pattern.matcher(password);
 		return matcher.matches();

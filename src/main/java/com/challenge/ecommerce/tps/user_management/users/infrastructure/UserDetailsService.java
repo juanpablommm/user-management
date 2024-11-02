@@ -17,11 +17,12 @@ public class UserDetailsService implements org.springframework.security.core.use
 
 	@Override
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new RuntimeException("Erro autehntication..."));
-		/*if (!user.isEnabled())
-			throw new UserManagementException(ApplicationMessagesEnum.FAIL_AUTHENTICATION.getMessages(),
-					HttpStatus.UNAUTHORIZED);*/
+		User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Erro autehntication..."));
+		/*
+		 * if (!user.isEnabled()) throw new
+		 * UserManagementException(ApplicationMessagesEnum.FAIL_AUTHENTICATION.
+		 * getMessages(), HttpStatus.UNAUTHORIZED);
+		 */
 		return this.userMapper.toJpaEntity(user);
 	}
 }

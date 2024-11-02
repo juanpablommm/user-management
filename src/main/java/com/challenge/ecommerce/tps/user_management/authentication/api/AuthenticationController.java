@@ -1,7 +1,6 @@
 package com.challenge.ecommerce.tps.user_management.authentication.api;
 
 import com.challenge.ecommerce.tps.user_management.authentication.application.AuthCommandHandler;
-import com.challenge.ecommerce.tps.user_management.users.application.find.UserFindCommandHandler;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AuthenticationController {
 
+	private final AuthenticationManager authenticationManager;
 
-    private final AuthenticationManager authenticationManager;
+	@PostMapping(path = "/login")
+	public ResponseEntity<String> authenticate(@Valid @RequestBody final AuthRequestDto authRequestDto) {
+		AuthCommandHandler authCommandHandler = new AuthCommandHandler();
+		final Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(authRequestDto.email(), authRequestDto.password()));
 
-    @PostMapping(path = "/login")
-    public ResponseEntity<String> authenticate(@Valid @RequestBody final AuthRequestDto authRequestDto) {
-        AuthCommandHandler authCommandHandler = new AuthCommandHandler();
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequestDto.email(), authRequestDto.password()));
-
-        authCommandHandler.handler(authRequestDto.email());
-        return ResponseEntity.ok("login..");
-    }
+		authCommandHandler.handler(authRequestDto.email());
+		return ResponseEntity.ok("login..");
+	}
 }
