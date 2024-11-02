@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: user-management
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/ecommerce
+    password: 060900diminombre
+    username: juampis
+  jpa:
+    properties:
+      hibernate:
+        default_schema: user_management
+  devtools:
+    livereload:
+      enabled: true
+server:
+  port: 8080
+  servlet:
+    context-path: /user-management
