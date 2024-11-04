@@ -3,6 +3,7 @@ package com.challenge.ecommerce.tps.user_management.authentication.infrastructur
 import com.challenge.ecommerce.tps.user_management.authentication.domain.AuthRefreshTokenRepository;
 import com.challenge.ecommerce.tps.user_management.authentication.domain.RefreshToken;
 import com.challenge.ecommerce.tps.user_management.users.infrastructure.UserEntity;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Primary
 @Component
 @AllArgsConstructor
-public class AuthAuthRefreshTokenJpaPostgresRepository implements AuthRefreshTokenRepository {
+public class AuthRefreshTokenJpaPostgresRepository implements AuthRefreshTokenRepository {
 
 	private final AuthRefreshTokenJpaRepository refreshTokenJpaRepository;
 
@@ -29,5 +30,10 @@ public class AuthAuthRefreshTokenJpaPostgresRepository implements AuthRefreshTok
 		final UserEntity userEntity = UserEntity.builder().userId(refreshToken.getUserId()).build();
 		refreshTokenEntity.setUser(userEntity);
 		this.refreshTokenJpaRepository.save(refreshTokenEntity);
+	}
+
+	@Override
+	public void deleteAllExpiredTokens(OffsetDateTime currentDateTime) {
+		this.refreshTokenJpaRepository.deleteAllExpiredTokens(currentDateTime);
 	}
 }

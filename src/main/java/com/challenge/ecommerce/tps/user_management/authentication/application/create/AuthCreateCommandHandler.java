@@ -3,6 +3,7 @@ package com.challenge.ecommerce.tps.user_management.authentication.application.c
 import com.challenge.ecommerce.tps.user_management.authentication.domain.AuthRefreshTokenRepository;
 import com.challenge.ecommerce.tps.user_management.authentication.domain.RefreshToken;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class AuthCreateCommandHandler {
@@ -22,10 +23,10 @@ public class AuthCreateCommandHandler {
 	}
 
 	public RefreshToken handler(final String email, final String password) {
-		String roles = this.authWithPasswordAndEmail.authentication(email, password);
+		List<String> roles = this.authWithPasswordAndEmail.authentication(email, password);
 		final Long userId = this.userIdByEmailFetcher.fetch(email).orElseThrow();
 		final String accessToken = this.authCreateAccessTokenJwt.createJWtToken(email, roles);
-		final RefreshToken refreshToken = new RefreshToken(String.valueOf(UUID.randomUUID()), accessToken,
+		final RefreshToken refreshToken = RefreshToken.createToAuth(String.valueOf(UUID.randomUUID()), accessToken,
 				OffsetDateTime.now().plusMinutes(10), userId);
 		this.refreshTokenRepository.save(refreshToken);
 		return refreshToken;

@@ -1,6 +1,7 @@
 package com.challenge.ecommerce.tps.user_management.authentication.infrastructure;
 
 import com.challenge.ecommerce.tps.user_management.users.infrastructure.UserEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +36,7 @@ public class RefreshTokenEntity {
 	@Column(name = "token")
 	private String token;
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSXXX", timezone = "America/Bogota")
 	@Column(name = "expiry_time")
 	private OffsetDateTime expiryTime;
 

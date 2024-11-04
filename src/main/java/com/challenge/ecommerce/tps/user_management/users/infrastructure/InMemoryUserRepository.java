@@ -18,4 +18,5 @@ public class InMemoryUserRepository implements UserRepository {
 	public OptionalLong findUserIdByEmail(final String email) {
 		return OptionalLong.empty();
 	}
+
 }

@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'com.challenge.ecommerce.tps'
-version = '1.2.0'
+version = '1.3.0'
 
 java {
 	sourceCompatibility = '17'
@@ -52,7 +52,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-	implementation files('src/main/librarys/security-library-1.0.2.jar')
+	implementation files('src/main/librarys/security-library-1.0.3.jar')
 }
 
 tasks.named('test') {
@@ -83,6 +83,7 @@ jacocoTestReport {
 	classDirectories.setFrom(
 			fileTree(dir: "$buildDir/classes/java/main", includes: ['**/*.class'], excludes: [
 					'**/config/**',
+					'**/*Exception*.class',
 					'**/api/**',
 					'**/shared/**'
 			])
@@ -113,6 +114,7 @@ jacocoTestCoverageVerification {
 	classDirectories.setFrom(
 			fileTree(dir: "$buildDir/classes/java/main", includes: ['**/*.class'], excludes: [
 					'**/config/**',
+					'**/*Exception*.class',
 					'**/api/**',
 					'**/shared/**'
 

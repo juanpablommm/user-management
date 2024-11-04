@@ -6,5 +6,5 @@ public interface AuthRefreshTokenJpaMapper {
 
 	RefreshTokenEntity toJpaEntity(final RefreshToken refreshToken);
 
-	RefreshToken toDomain(final RefreshTokenEntity refreshToken);
+	RefreshToken toDomain(final RefreshTokenEntity refreshTokenEntity);
 }

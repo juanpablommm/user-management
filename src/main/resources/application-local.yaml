@@ -19,11 +19,11 @@ server:
     context-path: /user-management
 
 settings-jks:
-  path: ${PATH_JKS_ECOMMERCE}
-  alias: ${ALIAS_JKS_ECOMMERCE}
-  password: ${PASSWORD_JKS_ECOMMERCE}
+  path: src/main/resources/ecommerce.jks
+  alias: key-rsa-ecommerce
+  password: ecommerce2024
 
 settings-refresh-token:
   times:
-    jwt: 1
+    jwt: 5
 

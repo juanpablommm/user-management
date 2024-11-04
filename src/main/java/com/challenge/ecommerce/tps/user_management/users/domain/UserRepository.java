@@ -8,5 +8,4 @@ public interface UserRepository {
 	Optional<User> findByEmail(final String email);
 
 	OptionalLong findUserIdByEmail(final String email);
-
 }

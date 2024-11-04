@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class RefreshToken {
 
+	private final Long refreshTokenId;
+
 	private final String token;
 
 	private final String accessToken;
@@ -13,11 +15,20 @@ public class RefreshToken {
 
 	private final Long userId;
 
-	public RefreshToken(String token, String accessToken, OffsetDateTime expiryTime, Long userId) {
+	public RefreshToken(Long refreshTokenId, String token, String accessToken, OffsetDateTime expiryTime, Long userId) {
+		this.refreshTokenId = refreshTokenId;
 		this.token = token;
 		this.accessToken = accessToken;
 		this.expiryTime = expiryTime;
 		this.userId = userId;
+	}
+
+	public static RefreshToken createToAuth(String token, String accessToken, OffsetDateTime expiryTime, Long userId) {
+		return new RefreshToken(null, token, accessToken, expiryTime, userId);
+	}
+
+	public Long getRefreshTokenId() {
+		return refreshTokenId;
 	}
 
 	public String getToken() {
@@ -43,19 +54,21 @@ public class RefreshToken {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		RefreshToken that = (RefreshToken) o;
-		return Objects.equals(getToken(), that.getToken()) && Objects.equals(getAccessToken(), that.getAccessToken())
+		return Objects.equals(getRefreshTokenId(), that.getRefreshTokenId())
+				&& Objects.equals(getToken(), that.getToken())
+				&& Objects.equals(getAccessToken(), that.getAccessToken())
 				&& Objects.equals(getExpiryTime(), that.getExpiryTime())
 				&& Objects.equals(getUserId(), that.getUserId());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getToken(), getAccessToken(), getExpiryTime(), getUserId());
+		return Objects.hash(getRefreshTokenId(), getToken(), getAccessToken(), getExpiryTime(), getUserId());
 	}
 
 	@Override
 	public String toString() {
-		return "RefreshToken{" + "token='" + token + '\'' + ", accessToken='" + accessToken + '\'' + ", expiryTime="
-				+ expiryTime + ", userId=" + userId + '}';
+		return "RefreshToken{" + "refreshTokenId=" + refreshTokenId + ", token='" + token + '\'' + ", accessToken='"
+				+ accessToken + '\'' + ", expiryTime=" + expiryTime + ", userId=" + userId + '}';
 	}
 }

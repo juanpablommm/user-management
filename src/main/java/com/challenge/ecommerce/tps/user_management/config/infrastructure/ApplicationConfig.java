@@ -4,6 +4,7 @@ import com.challenge.ecommerce.tps.encript.KeyRsaSupplier;
 import com.challenge.ecommerce.tps.jwt.JwtManagement;
 import com.challenge.ecommerce.tps.user_management.authentication.application.create.AuthCreateCommandHandler;
 import com.challenge.ecommerce.tps.user_management.authentication.application.create.AuthWithPasswordAndEmail;
+import com.challenge.ecommerce.tps.user_management.authentication.application.refresh.AuthRefreshCommandHandler;
 import com.challenge.ecommerce.tps.user_management.authentication.domain.AuthRefreshTokenRepository;
 import com.challenge.ecommerce.tps.user_management.users.application.find.UserFindCommandHandler;
 import com.challenge.ecommerce.tps.user_management.users.domain.UserRepository;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,8 +55,7 @@ public class ApplicationConfig {
 		return (email, password) -> {
 			final Authentication authentication = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-			return authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-					.collect(Collectors.joining(", "));
+			return authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 		};
 	}
 
@@ -70,5 +69,11 @@ public class ApplicationConfig {
 	@Bean
 	public JwtManagement jwtManagement(final KeyRsaSupplier keyRsaSupplier) {
 		return new JwtManagement(keyRsaSupplier, this.expiryTimeAtMinutes);
+	}
+
+	@Bean
+	public AuthRefreshCommandHandler authRefreshCommandHandler(
+			final AuthRefreshTokenRepository refreshTokenRepository) {
+		return new AuthRefreshCommandHandler(refreshTokenRepository);
 	}
 }

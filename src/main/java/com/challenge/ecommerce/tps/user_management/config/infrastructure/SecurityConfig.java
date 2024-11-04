@@ -57,7 +57,7 @@ public class SecurityConfig {
 
 	@Bean
 	public AuthenticationFilter authenticationFilter(JwtManagement jwtManagement) {
-		List<String> excludeUrlPatterns = List.of("/**/auth/login", "/**/auth/refresh");
+		List<String> excludeUrlPatterns = List.of("/**/auth/**", "/**/refresh");
 		return AuthenticationFilter.builder().jwtManagement(jwtManagement).excludeUrlPatterns(excludeUrlPatterns)
 				.build();
 	}

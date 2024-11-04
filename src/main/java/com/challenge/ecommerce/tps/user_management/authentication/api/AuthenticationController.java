@@ -1,7 +1,9 @@
 package com.challenge.ecommerce.tps.user_management.authentication.api;
 
 import com.challenge.ecommerce.tps.user_management.authentication.api.create.AuthCreateRequestDto;
+import com.challenge.ecommerce.tps.user_management.authentication.api.refresh.AuthRefreshTokenRequestDTO;
 import com.challenge.ecommerce.tps.user_management.authentication.application.create.AuthCreateCommandHandler;
+import com.challenge.ecommerce.tps.user_management.authentication.application.refresh.AuthRefreshCommandHandler;
 import com.challenge.ecommerce.tps.user_management.authentication.domain.RefreshToken;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
 	private final AuthCreateCommandHandler authCreateCommandHandler;
-
+	private final AuthRefreshCommandHandler authRefreshCommandHandler;
 	private final RefreshTokenApiMapper refreshTokenApiMapper;
 
 	@PostMapping(path = "/login")
@@ -29,9 +31,10 @@ public class AuthenticationController {
 	}
 
 	@PostMapping(path = "/refresh")
-	public ResponseEntity<String> refreshAuthenticate(
-			@Valid @RequestBody final AuthCreateRequestDto authCreateRequestDto) {
-		return ResponseEntity.ok("login..");
+	public ResponseEntity<AuthResponseDTO> refreshAuthenticate(
+			@RequestBody AuthRefreshTokenRequestDTO authRefreshTokenRequestDTO) {
+		final RefreshToken refreshToken = this.authRefreshCommandHandler.handler(authRefreshTokenRequestDTO.token());
+		return ResponseEntity.ok(this.refreshTokenApiMapper.toAuthResponseDto(refreshToken));
 	}
 
 }

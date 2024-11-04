@@ -1,8 +1,10 @@
 package com.challenge.ecommerce.tps.user_management.users.infrastructure;
 
+import com.challenge.ecommerce.tps.user_management.role.infrastructure.RoleEntity;
 import jakarta.persistence.*;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,10 +48,13 @@ public class UserEntity implements UserDetails {
 	@Column(name = "enabled")
 	private Boolean enabled;
 
-	// TODO: acomodar con la tabla roles
+	@ManyToMany
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<RoleEntity> roles = new HashSet<>();
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("Administrador"), new SimpleGrantedAuthority("Tester"));
+		return this.roles.stream().map(RoleEntity::getRoleName).map(SimpleGrantedAuthority::new).toList();
 	}
 
 	@Override
