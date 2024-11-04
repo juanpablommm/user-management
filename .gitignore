@@ -16,6 +16,9 @@
 # git-encrypt
 .git-crypt/
 
+
+.idea
+
 # AWS User-specific
 .idea/**/aws.xml
 

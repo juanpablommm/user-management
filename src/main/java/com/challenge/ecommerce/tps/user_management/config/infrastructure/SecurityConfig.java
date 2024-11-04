@@ -1,5 +1,8 @@
 package com.challenge.ecommerce.tps.user_management.config.infrastructure;
 
+import com.challenge.ecommerce.tps.filter.AuthenticationFilter;
+import com.challenge.ecommerce.tps.jwt.JwtManagement;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -52,14 +56,22 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationProvider authenticationProvider)
-			throws Exception {
+	public AuthenticationFilter authenticationFilter(JwtManagement jwtManagement) {
+		List<String> excludeUrlPatterns = List.of("/**/auth/login", "/**/auth/refresh");
+		return AuthenticationFilter.builder().jwtManagement(jwtManagement).excludeUrlPatterns(excludeUrlPatterns)
+				.build();
+	}
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationProvider authenticationProvider,
+			AuthenticationFilter authenticationFilter) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable).cors(cors -> cors.configurationSource(corsConfigurationSource()))
 				.authorizeHttpRequests(
 						authRequest -> authRequest.requestMatchers("/auth/**").permitAll().anyRequest().authenticated())
 				.sessionManagement(
 						sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authenticationProvider(authenticationProvider);
+				.authenticationProvider(authenticationProvider)
+				.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
 

@@ -3,8 +3,14 @@ package com.challenge.ecommerce.tps.user_management.users.infrastructure;
 import jakarta.persistence.*;
 import java.util.Collection;
 import java.util.List;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -40,9 +46,10 @@ public class UserEntity implements UserDetails {
 	@Column(name = "enabled")
 	private Boolean enabled;
 
+	// TODO: acomodar con la tabla roles
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of();
+		return List.of(new SimpleGrantedAuthority("Administrador"), new SimpleGrantedAuthority("Tester"));
 	}
 
 	@Override

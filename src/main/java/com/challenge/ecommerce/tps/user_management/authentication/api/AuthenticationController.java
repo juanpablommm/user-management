@@ -1,12 +1,11 @@
 package com.challenge.ecommerce.tps.user_management.authentication.api;
 
-import com.challenge.ecommerce.tps.user_management.authentication.application.AuthCommandHandler;
+import com.challenge.ecommerce.tps.user_management.authentication.api.create.AuthCreateRequestDto;
+import com.challenge.ecommerce.tps.user_management.authentication.application.create.AuthCreateCommandHandler;
+import com.challenge.ecommerce.tps.user_management.authentication.domain.RefreshToken;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AuthenticationController {
 
-	private final AuthenticationManager authenticationManager;
+	private final AuthCreateCommandHandler authCreateCommandHandler;
+
+	private final RefreshTokenApiMapper refreshTokenApiMapper;
 
 	@PostMapping(path = "/login")
-	public ResponseEntity<String> authenticate(@Valid @RequestBody final AuthRequestDto authRequestDto) {
-		AuthCommandHandler authCommandHandler = new AuthCommandHandler();
-		final Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(authRequestDto.email(), authRequestDto.password()));
+	public ResponseEntity<AuthResponseDTO> createAuthenticate(
+			@Valid @RequestBody final AuthCreateRequestDto authRequestDto) {
+		final RefreshToken refreshToken = this.authCreateCommandHandler.handler(authRequestDto.email(),
+				authRequestDto.password());
+		return ResponseEntity.ok(this.refreshTokenApiMapper.toAuthResponseDto(refreshToken));
+	}
 
-		authCommandHandler.handler(authRequestDto.email());
+	@PostMapping(path = "/refresh")
+	public ResponseEntity<String> refreshAuthenticate(
+			@Valid @RequestBody final AuthCreateRequestDto authCreateRequestDto) {
 		return ResponseEntity.ok("login..");
 	}
+
 }

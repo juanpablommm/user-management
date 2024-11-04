@@ -17,3 +17,13 @@ server:
   port: 8080
   servlet:
     context-path: /user-management
+
+settings-jks:
+  path: ${PATH_JKS_ECOMMERCE}
+  alias: ${ALIAS_JKS_ECOMMERCE}
+  password: ${PASSWORD_JKS_ECOMMERCE}
+
+settings-refresh-token:
+  times:
+    jwt: 1
+

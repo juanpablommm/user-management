@@ -1,17 +1,20 @@
 package com.challenge.ecommerce.tps.user_management.users.infrastructure;
 
-import com.challenge.ecommerce.tps.user_management.shared.infrastructure.ModelMapperFactory;
 import com.challenge.ecommerce.tps.user_management.users.domain.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserModelMapper {
+public class UserModelMapper implements UserMapper {
 
+	@Override
 	public UserEntity toJpaEntity(User user) {
-		return ModelMapperFactory.getModelMapper().map(user, UserEntity.class);
+		return new UserEntity(user.getId(), user.getNames(), user.getSurnames(), user.getUsername(), user.getPassword(),
+				user.getEmail(), user.getEnabled());
 	}
 
+	@Override
 	public User toDomain(UserEntity userEntity) {
-		return ModelMapperFactory.getModelMapper().map(userEntity, User.class);
+		return new User(userEntity.getUserId(), userEntity.getNames(), userEntity.getSurnames(),
+				userEntity.getUsername(), userEntity.getPassword(), userEntity.getEmail(), userEntity.getEnabled());
 	}
 }
