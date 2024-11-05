@@ -40,8 +40,7 @@ gradle bootRun
 ```
 
 ## Quality Gates news
-![image](https://github.com/user-attachments/assets/951c3b13-d08e-4033-8da9-c8f21cfaf808)
-
+![image](https://github.com/user-attachments/assets/46609365-c8bf-4bff-aca1-cbd16c200648)
 
 
 
