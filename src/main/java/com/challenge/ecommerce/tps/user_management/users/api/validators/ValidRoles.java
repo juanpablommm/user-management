@@ -1,4 +1,4 @@
-package com.challenge.ecommerce.tps.user_management.users.api;
+package com.challenge.ecommerce.tps.user_management.users.api.validators;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -8,14 +8,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Target({ElementType.TYPE_USE, ElementType.TYPE, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = EmailValidator.class)
+@Constraint(validatedBy = RolesValidator.class)
 @Documented
-public @interface ValidEmail {
-	String message() default "Invalid email format or null data";
-
+public @interface ValidRoles {
+	String message() default "Invalid Role or Null Data";
 	Class<?>[] groups() default {};
-
 	Class<? extends Payload>[] payload() default {};
 }

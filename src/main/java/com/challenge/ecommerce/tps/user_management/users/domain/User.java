@@ -26,6 +26,11 @@ public class User {
 		this.roles = roles;
 	}
 
+	public static User forCreate(String names, String surnames, String username, String password, String email,
+			Set<String> roles) {
+		return new User(null, names, surnames, username, password, email, true, roles);
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -13,4 +13,7 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
 	@Query(value = "SELECT user.userId FROM UserEntity user WHERE user.email = :email")
 	Long findUserIdByEmail(final String email);
 
+	Optional<UserEntity> findByUsernameIgnoreCase(final String username);
+
+	void deleteByUsernameIgnoreCase(final String username);
 }

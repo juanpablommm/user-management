@@ -1,4 +1,4 @@
-package com.challenge.ecommerce.tps.user_management.users.api;
+package com.challenge.ecommerce.tps.user_management.users.api.validators;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

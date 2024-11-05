@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class RefreshTokenApiModelMapper implements RefreshTokenApiMapper {
 
 	@Override
-	public AuthResponseDTO toAuthResponseDto(RefreshToken refreshToken) {
-		return ModelMapperFactory.getModelMapper().map(refreshToken, AuthResponseDTO.class);
+	public AuthResponseDto toAuthResponseDto(RefreshToken refreshToken) {
+		return ModelMapperFactory.getModelMapper().map(refreshToken, AuthResponseDto.class);
 	}
 }

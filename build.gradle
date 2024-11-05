@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'com.challenge.ecommerce.tps'
-version = '1.3.0'
+version = '1.4.0'
 
 java {
 	sourceCompatibility = '17'
@@ -84,7 +84,9 @@ jacocoTestReport {
 			fileTree(dir: "$buildDir/classes/java/main", includes: ['**/*.class'], excludes: [
 					'**/config/**',
 					'**/*Exception*.class',
+					'**/*Dto*.class',
 					'**/api/**',
+					'**/domain/**',
 					'**/shared/**'
 			])
 	)
@@ -115,7 +117,9 @@ jacocoTestCoverageVerification {
 			fileTree(dir: "$buildDir/classes/java/main", includes: ['**/*.class'], excludes: [
 					'**/config/**',
 					'**/*Exception*.class',
+					'**/*dto*.class',
 					'**/api/**',
+					'**/domain/**',
 					'**/shared/**'
 
 			])

@@ -1,4 +1,4 @@
-package com.challenge.ecommerce.tps.user_management.users.api;
+package com.challenge.ecommerce.tps.user_management.shared.api;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -8,12 +8,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordValidator.class)
+@Constraint(validatedBy = ValidatorNotEmptyField.class)
 @Documented
-public @interface ValidPassword {
-	String message() default "Invalid password format or null data";
+public @interface ValidNotEmptyField {
+	String message() default "Field cannot be null or empty";
 
 	Class<?>[] groups() default {};
 

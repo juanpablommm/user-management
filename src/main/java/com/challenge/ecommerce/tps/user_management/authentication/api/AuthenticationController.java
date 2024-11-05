@@ -23,7 +23,7 @@ public class AuthenticationController {
 	private final RefreshTokenApiMapper refreshTokenApiMapper;
 
 	@PostMapping(path = "/login")
-	public ResponseEntity<AuthResponseDTO> createAuthenticate(
+	public ResponseEntity<AuthResponseDto> createAuthenticate(
 			@Valid @RequestBody final AuthCreateRequestDto authRequestDto) {
 		final RefreshToken refreshToken = this.authCreateCommandHandler.handler(authRequestDto.email(),
 				authRequestDto.password());
@@ -31,7 +31,7 @@ public class AuthenticationController {
 	}
 
 	@PostMapping(path = "/refresh")
-	public ResponseEntity<AuthResponseDTO> refreshAuthenticate(
+	public ResponseEntity<AuthResponseDto> refreshAuthenticate(
 			@RequestBody AuthRefreshTokenRequestDTO authRefreshTokenRequestDTO) {
 		final RefreshToken refreshToken = this.authRefreshCommandHandler.handler(authRefreshTokenRequestDTO.token());
 		return ResponseEntity.ok(this.refreshTokenApiMapper.toAuthResponseDto(refreshToken));

@@ -6,7 +6,10 @@ import com.challenge.ecommerce.tps.user_management.authentication.application.cr
 import com.challenge.ecommerce.tps.user_management.authentication.application.create.AuthWithPasswordAndEmail;
 import com.challenge.ecommerce.tps.user_management.authentication.application.refresh.AuthRefreshCommandHandler;
 import com.challenge.ecommerce.tps.user_management.authentication.domain.AuthRefreshTokenRepository;
-import com.challenge.ecommerce.tps.user_management.users.application.find.UserFindCommandHandler;
+import com.challenge.ecommerce.tps.user_management.users.application.create.CreateUserCommandHandler;
+import com.challenge.ecommerce.tps.user_management.users.application.delete.DeleteCommandHandler;
+import com.challenge.ecommerce.tps.user_management.users.application.find.FindUserCommandHandler;
+import com.challenge.ecommerce.tps.user_management.users.application.findAll.FindAllCommandHandler;
 import com.challenge.ecommerce.tps.user_management.users.domain.UserRepository;
 import java.io.IOException;
 import java.security.KeyStoreException;
@@ -37,8 +40,23 @@ public class ApplicationConfig {
 	private Long expiryTimeAtMinutes;
 
 	@Bean
-	public UserFindCommandHandler userFindCommandHandler(final UserRepository userRepository) {
-		return new UserFindCommandHandler(userRepository);
+	public CreateUserCommandHandler createUserCommandHandler(final UserRepository userRepository) {
+		return new CreateUserCommandHandler(userRepository);
+	}
+
+	@Bean
+	public FindUserCommandHandler findUserCommandHandler(final UserRepository userRepository) {
+		return new FindUserCommandHandler(userRepository);
+	}
+
+	@Bean
+	public FindAllCommandHandler findAllCommandHandler(final UserRepository userRepository) {
+		return new FindAllCommandHandler(userRepository);
+	}
+
+	@Bean
+	public DeleteCommandHandler deleteCommandHandler(final UserRepository userRepository) {
+		return new DeleteCommandHandler(userRepository);
 	}
 
 	@Bean

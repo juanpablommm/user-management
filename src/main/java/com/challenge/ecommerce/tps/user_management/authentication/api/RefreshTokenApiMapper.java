@@ -4,5 +4,5 @@ import com.challenge.ecommerce.tps.user_management.authentication.domain.Refresh
 
 public interface RefreshTokenApiMapper {
 
-	AuthResponseDTO toAuthResponseDto(final RefreshToken refreshToken);
+	AuthResponseDto toAuthResponseDto(final RefreshToken refreshToken);
 }
